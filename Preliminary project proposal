@@ -1,0 +1,33 @@
+preliminary project proposal
+
+member:
+Travis Boltz
+Yitao Ma
+Yue Ning
+Yuqing Zhao
+
+
+Problem Defination:
+
+
+
+
+Data Sources:
+We are going to work on a waste water data set with about 13,000 observations.  
+The raw data is available online at the website in the csv files: 
+http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl://9f766d4f820e9482d016681c86031b76
+Pre-processing steps will be performed to obtain clean data for further analysis.  
+ 
+ 
+Data Analysis Steps:
+
+ 
+ 
+Results Evaluation:
+success metrics, statistical models, and KPIs 
+
+
+
+Final Deliverables:
+A final report will be delivered to summarise all analysis results and possible predictions. Figures will be used to visualise the results and provide a direct impression. A presentation will be given as a complementary to the report to show the work to audiences.
+
