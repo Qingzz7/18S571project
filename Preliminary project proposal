@@ -16,15 +16,24 @@ Data Sources:
 We are going to work on a waste water data set with about 13,000 observations.  
 The raw data is available online at the website in the csv files: 
 http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl://9f766d4f820e9482d016681c86031b76
-Pre-processing steps will be performed to obtain clean data for further analysis.  
+Pre-processing steps will be performed to obtain clean data for further analysis. Data tables will be combined first. Then we will summarize the data. Missing values or other value errors will be processed. Data may be trandformed before analysis. Random sampling will be used to draw samples. Data set will be split to training and testing data set.   
  
- 
-Data Analysis Steps:
 
+ 
+
+
+Data Analysis Steps:
+We will exploring the ralationships among all attributes. Group the data with attributes having dependence. Remove unrelated attributes. It is possible to perform principle component analysis here to identify the key features. Building various regression models on training data set. Building classification models as well.   
+ 
  
  
 Results Evaluation:
 success metrics, statistical models, and KPIs 
+
+
+
+
+
 
 
 
