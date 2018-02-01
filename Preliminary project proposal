@@ -10,7 +10,7 @@ Members:
 ==============================================================================================================================
 
 Problem Definition:
-
+  Water waste can be a serious problem to the greater Chicago area. Without careful waste water processing, it will be harmful to the evironment and threaten the future water quality. During the waste water procesing, chemicals need to be eliminated and reduced to a safety level. By comparing the chemicals in the waste water before and after processing, we can know how the process performed. We would also like to predict the present of certain chemicals based on other chemicals levels. Based on this, we can prepare for future waste water processing requiremnts.
 
 
 
@@ -36,8 +36,10 @@ Data Analysis Steps:
  
  
 Results Evaluation:
-  Regression, PCA, classification and clustering model would be used in this project.
+  Regression, classification and clustering model would be used in this project.
+  Cross-validation will be used in building models.
   Thresholds would be given after several tests.
+  Several methods like recall, precision and F1 score will be used to evaluate the models. 
   ROC, AUC and confusion matrix would be used as success metrics so far.
   
 
