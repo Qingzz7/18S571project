@@ -1,4 +1,4 @@
-# 18SMATH571 Final Project
+# MATH571 Final Project
 ## Preliminary Project Proposal
 
 
