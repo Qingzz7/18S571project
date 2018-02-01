@@ -18,7 +18,7 @@
 
 ##### Data Sources
 >  We are going to work on a wastewater dataset with about 13,000 observations.  
-> The [raw data] (http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl://9f766d4f820e9482d016681c86031b76)is available online at the website in the CSV files
+> The [raw data](http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl://9f766d4f820e9482d016681c86031b76)is available online at the website in the CSV files
   
   
 ##### Pre-processing steps 
