@@ -9,8 +9,8 @@
 - Yuqing Zhao
 ***
 ### Problem Definition  
-  Water waste can be a serious problem to the greater Chicago area. Without careful waste water processing, it will be harmful to the environment and threaten the future water quality.During the waste water processing, chemicals need to be eliminated and reduced to a safety level.   
-  By comparing the chemicals in the waste water before and after processing, we can know how the process performed.We would also like to predict the present of certain chemicals based on other chemicals levels. Based on this, we can prepare for future waste water processing requirements.  
+   Water waste can be a serious problem to the greater Chicago area. Without careful waste water processing, it will be harmful to the environment and threaten the future water quality.During the waste water processing, chemicals need to be eliminated and reduced to a safety level.   
+   By comparing the chemicals in the waste water before and after processing, we can know how the process performed.We would also like to predict the present of certain chemicals based on other chemicals levels. Based on this, we can prepare for future waste water processing requirements.  
 
 
 ### Data Sources
