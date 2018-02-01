@@ -36,11 +36,11 @@ The [raw data](http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl:
  
   
 ### Results Evaluation
-__Regression, classification and clustering model__ would be used in this project.  
+__Regression, __classification and __clustering model__ would be used in this project.  
 __Cross-validation__ will be used in building models.  
 Thresholds would be given after several tests.  
-Several methods like __recall, precision and F1 Score__ will be used to evaluate the models.   
-__ROC, AUC and confusion matrix__ would be used as success metrics so far.  
+Several methods like __recall__, __precision__ and __F1 Score__ will be used to evaluate the models.   
+__ROC curve__, __AUC__ and __confusion matrix__ would be used as success metrics so far.  
   
 
 ### Final Deliverables
