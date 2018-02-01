@@ -1,6 +1,8 @@
 # 18SMATH571 Final Project
 ## Preliminary Project Proposal
 
+***
+
 ##### Members:
 - Travis Boltz
 - Yitao Ma
@@ -9,16 +11,16 @@
 
 ##### Problem Definition:
 >  Water waste can be a serious problem to the greater Chicago area. 
->  Without careful waste water processing, it will be harmful to the evironment and threaten the future water quality. 
->  During the waste water procesing, chemicals need to be eliminated and reduced to a safety level. 
->  By comparing the chemicals in the waste water before and after processing, we can know how the process performed. 
->  We would also like to predict the present of certain chemicals based on other chemicals levels. Based on this, 
->  we can prepare for future waste water processing requiremnts.
+   Without careful waste water processing, it will be harmful to the evironment and threaten the future water quality. 
+   During the waste water procesing, chemicals need to be eliminated and reduced to a safety level. 
+   By comparing the chemicals in the waste water before and after processing, we can know how the process performed. 
+   We would also like to predict the present of certain chemicals based on other chemicals levels. Based on this, 
+   we can prepare for future waste water processing requiremnts.
 
 
 ##### Data Sources
 >  We are going to work on a wastewater dataset with about 13,000 observations.  
-> The [raw data](http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl://9f766d4f820e9482d016681c86031b76) is available online at the website in the CSV files
+>  The [raw data](http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl://9f766d4f820e9482d016681c86031b76) is available online at the website in the CSV files
   
   
 ##### Pre-processing steps 
