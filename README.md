@@ -9,8 +9,8 @@
 - Yuqing Zhao
 ***
 ### Problem Definition  
-Water waste can be a serious problem to the greater Chicago area. Without careful waste water processing, it will be harmful to the environment and threaten the future water quality.During the waste water processing, chemicals need to be eliminated and reduced to a safety level.   
-By comparing the chemicals in the waste water before and after processing, we can know how the process performed.We would also like to predict the present of certain chemicals based on other chemicals levels. Based on this, we can prepare for future waste water processing requirements.  
+Water waste can be a serious problem for the Great Lakes Regoin, especailly when untreated sewage makes its way into the natural ecosystem from combined sewage overflows (CSO's).  
+Without careful waste water management, the raw sewage provides nutrients, like nitrogen and phosphorus, provide the foodstock for algae to grow unchecked resulting in a harmful algae bloom.  Harmful algae blooms (HAB's) can release poisons that are harmful to the environment and human health. Not all municipalities have the budget or foresight to measure nitrogen in their water supply.  However, it is much more common for muncipalities to measure properties like BOD5, Suspended Solids, and dissolved oxygen. We want to use these chemical measurements and others that are present in the water  to predict the concentration of nitrogen. This is useful in both understand which chemicals correlated with nitrogen, and make an inferences about concentration of nitrogen when it is absent from the data.  
 
 
 ### Data Sources
