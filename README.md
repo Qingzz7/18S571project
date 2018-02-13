@@ -52,16 +52,13 @@ Demographic information based on different location
 3. We will use T-tests p-approach to compare each pair of the locations at same years for each attributes.
 use ANOVA test to compare the attributes of different years at same location.
 4. We will create dummy variables based on the ANOVA as needed for future modeling.
-    
- 
-  
+      
 ### Results Evaluation
-__Regression__ __classification__ and __clustering model__ would be used in this project.      
-__Cross-validation__ will be used in building models.       
-Thresholds would be given after several tests.      
-Several metrics like __recall__, __precision__ and __F1 Score__ will be used to evaluate the models.     
-__ROC curve__, __AUC__ and __confusion matrix__ would be used as success metrics so far.    
-  
+__Regression__ __classification__ and __clustering model__ would be used in this project.  
+__Cross-validation__ will be used in building models.  
+Thresholds would be given after several tests.  
+Several metrics like __recall__, __precision__ and __F1 Score__ will be used to evaluate the models.  
+__ROC curve__, __AUC__ and __confusion matrix__ would be used as success metrics so far.  
 
 ### Final Deliverables
 Final report will be delivered to summarize all analysis results and possible predictions.   
