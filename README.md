@@ -56,9 +56,9 @@ use ANOVA test to compare the attributes of different years at same location.
  
   
 ### Results Evaluation
-__Regression__ __classification__ and __clustering model__ would be used in this project.    
-__Cross-validation__ will be used in building models.     
-Thresholds would be given after several tests.    
+__Regression__ __classification__ and __clustering model__ would be used in this project.      
+__Cross-validation__ will be used in building models.       
+Thresholds would be given after several tests.      
 Several metrics like __recall__, __precision__ and __F1 Score__ will be used to evaluate the models.     
 __ROC curve__, __AUC__ and __confusion matrix__ would be used as success metrics so far.    
   
