@@ -1,5 +1,4 @@
 # MATH571 Final Project
-## Preliminary Project Proposal
 
 
 ### Members
@@ -8,7 +7,16 @@
 - Yue Ning
 - Yuqing Zhao
 ***
-### Problem Definition  
+
+### Progress of Project
+
+| Date          | Detail                | Note              |
+| ------------- |:--------------------: | -----------------:|
+| 02-02         | Proposal submit       | Draft             |
+| 02-13         | First meeting         | Objective is comfimed & Data analysis steps update|
+
+***
+### Problem Definition  
 Water waste can be a serious problem for the Great Lakes Regoin, especailly when untreated sewage makes its way into the natural ecosystem from combined sewage overflows (CSO's).  
 Without careful waste water management, the raw sewage provides nutrients, like nitrogen and phosphorus, provide the foodstock for algae to grow unchecked resulting in a harmful algae bloom.  Harmful algae blooms (HAB's) can release poisons that are harmful to the environment and human health. Not all municipalities have the budget or foresight to measure nitrogen in their water supply. However, it is much more common for muncipalities to measure properties like BOD5, Suspended Solids, and dissolved oxygen.   
 We want to use these chemical measurements and others that are present in the water to predict the concentration of nitrogen. This is useful in both understand which chemicals correlated with nitrogen, and make an inferences about concentration of nitrogen when it is absent from the data.  
@@ -39,11 +47,12 @@ Demographic information based on different location
  
 
 ### Data Analysis Steps
-1. Explore the relationships among all attributes.   
-2. Group the data with attributes having dependence.   
-3. Remove unrelated attributes.   
-4. It is possible to perform principal component analysis here to identify the key features.   
-5. Building various regression models on training data set. Building classification models as well.     
+1. We plan to analysis the population, manufacturing facilities in the 10 miles range, and daily rainfalls(inch) to see their relationships with the attributes. 
+2. We will show the summary statistics and scattering plot of every attributes at different locations and years interval. we wanna exam the distributions and see the change first.
+3. We will use T-tests p-approach to compare each pair of the locations at same years for each attributes.
+use ANOVA test to compare the attributes of different years at same location.
+4. We will create dummy variables based on the ANOVA as needed for future modeling.
+    
  
   
 ### Results Evaluation
