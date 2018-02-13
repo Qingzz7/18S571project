@@ -16,7 +16,16 @@ We want to use these chemical measurements and others that are present in the wa
 
 ### Data Sources
 We are going to work on a wastewater dataset with about 13,000 observations.    
-The [raw data](http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl://9f766d4f820e9482d016681c86031b76) is available online at the website in the CSV files.  
+The [raw data](http://www.mwrd.org/irj/portal/anonymous?NavigationTarget=navurl://9f766d4f820e9482d016681c86031b76) is available online at the website in the CSV files. We plan to use final effluents and raw effluents based on seven locations from 2011 to 2020.  
+Demographic information based on different location  
+[Stickney](http://www.mwrd.org/irj/go/km/docs/documents/MWRD/internet/protecting_the_environment/Water_Reclamation_Plants/pdfs/FactSheet_WRPs_Stickney.pdf),
+[Calumet](http://www.mwrd.org/irj/go/km/docs/documents/MWRD/internet/protecting_the_environment/Water_Reclamation_Plants/pdfs/FactSheet_WRPs_Calumet.pdf),
+[O'Brien](http://www.mwrd.org/irj/go/km/docs/documents/MWRD/internet/protecting_the_environment/Water_Reclamation_Plants/pdfs/FactSheet_WRPs_O'Brien.pdf),
+[Kirie](http://www.mwrd.org/irj/go/km/docs/documents/MWRD/internet/protecting_the_environment/Water_Reclamation_Plants/pdfs/FactSheet_WRPs_Kirie.pdf),
+[Egan](http://www.mwrd.org/irj/go/km/docs/documents/MWRD/internet/protecting_the_environment/Water_Reclamation_Plants/pdfs/FactSheet_WRPs_Egan.pdf),
+[Hanover_Park](http://www.mwrd.org/irj/go/km/docs/documents/MWRD/internet/protecting_the_environment/Water_Reclamation_Plants/pdfs/FactSheet_WRPs_Hanover_Park.pdf), 
+[Lemont](http://www.mwrd.org/irj/go/km/docs/documents/MWRD/internet/protecting_the_environment/Water_Reclamation_Plants/pdfs/FactSheet_WRPs_Lemont.pdf)
+  
   
   
 ### Pre-processing steps 
