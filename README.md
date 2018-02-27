@@ -53,7 +53,7 @@
 
 - __Cross-validation__ will be used in building models to avoid overfittings.  
 
-- Several metrics like __recall__, __precision__and __F1 Score__ will be used to evaluate the classification models.  __ROC curve__, __AUC__ and __confusion matrix__ would be used as success metrics so far. 
+- Several metrics like __recall__, __precision__ and __F1 Score__ will be used to evaluate the classification models.  __ROC curve__, __AUC__ and __confusion matrix__ would be used as success metrics so far. 
 
 
 ### Final Deliverables
