@@ -49,9 +49,8 @@ We also plan on adding the [daily rainfall](https://drive.google.com/file/d/1BHu
 ### Data Analysis Steps
 1. We plan to analysis the population, manufacturing facilities in the 10 miles range, and daily rainfalls(inch) to see their relationships with the attributes. 
 2. We will show the summary statistics and scattering plot of every attributes at different locations and years interval. we wanna exam the distributions and see the change first.
-3. We will use T-tests p-approach to compare each pair of the locations at same years for each attributes.
-use ANOVA test to compare the attributes of different years at same location.
-4. We will create dummy variables based on the ANOVA as needed for future modeling.
+3. We will use ANOVA test to see if there is any difference at different locations. Then we will use T-tests p-approach to compare each pair of the locations at same years for each attributes.
+4. We will create dummy variables as needed for future modeling.
       
 ### Results Evaluation
 __Regression__ __classification__ and __clustering method__ would be used in this project.  
