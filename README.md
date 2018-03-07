@@ -19,8 +19,7 @@
 
 ***
 
-### [Project plan]
-(https://app.asana.com/0/583167069344786/583167069344797)
+### [Project plan](https://app.asana.com/0/583167069344786/583167069344797)
 
 
 ### Problem Definition 
