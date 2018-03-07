@@ -19,6 +19,10 @@
 
 ***
 
+### Project plan
+https://app.asana.com/0/583167069344786/583167069344797
+
+
 ### Problem Definition 
 - Water waste can be a serious problem for the Great Lakes Regoin, especailly when untreated sewage makes its way into the natural ecosystem from combined sewage overflows (CSO's).  
 - Without careful waste water management, the raw sewage provides nutrients, like nitrogen and phosphorus, provides the foodstock for algae to grow unchecked resulting in a harmful algae bloom.   
