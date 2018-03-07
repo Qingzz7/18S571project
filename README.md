@@ -14,7 +14,8 @@
 | ------------- |:--------------------: | -----------------:|
 | 02-02         | Proposal submit       | Draft             |
 | 02-13         | First meeting         | Objective is comfimed & Data analysis steps update|
-| 02-27         | meeting               | Prepare for 5min presentation on Thursday. Finalize proposal| 
+| 02-27         | meeting               | Prepare for 5min presentation on Thursday. Finalize proposal| 
+| 03-07         | meeting               | Prepare for project plan use ASANA| 
 
 ***
 
