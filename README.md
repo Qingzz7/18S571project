@@ -49,10 +49,9 @@
 3. Use ANOVA test to see if there is any difference at different locations. 
 4. Use T-tests p-approach to compare each pair of the locations at same years for each attributes.
 5. Create dummy variables as needed for future modeling.
+6. __Regression__ __classification__ and __clustering method__ would be used in this project. 
 
 ### Results Evaluation
-- __Regression__ __classification__ and __clustering method__ would be used in this project. 
-
 - __Adjusted R**2 and MSE__ will be used to evaulate our regression model. 
 
 - __Cross-validation__ will be used in building models to avoid overfittings.  
