@@ -45,7 +45,7 @@ We've already had the zip code and address of these water plants. We want draw C
 3. Find population data with ZIP Code. 
 4. By the density of population, make a heat map on the original graph.
 
-![ook county demographi](cook county demographic.png)
+   ![ook county demographi](cook county demographic.png)
 
 
 
