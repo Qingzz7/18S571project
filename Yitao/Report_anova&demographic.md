@@ -44,9 +44,12 @@ We've already had the zip code and address of these water plants. We want draw C
 2. Draw the border based on ZIP Code.
 3. Find population data with ZIP Code. 
 4. By the density of population, make a heat map on the original graph.
+   - Use package "Choroplethr", it contains all ZIP and FIP code around U.S and some other countries. 
 
    ![ook county demographi](cook county demographic.png)
 
+
+### Result Analysis
 
 
 ### Further improvement 
