@@ -8,69 +8,59 @@
 
 # Read data
 # Please change the library manually to read the file.
-water_df <- read.csv("~/Desktop/ALL_MWRD.csv",  header=TRUE, sep=",")
+water_df <- read.csv("~/Desktop/completeMWRD.csv",  header=TRUE, sep=",")
 head(water_df)
 
-# change data type: factor -> numeric
-water_df[,'TKN'] <- as.character(water_df[,'TKN'])
-water_df[,'TKN'] <- as.numeric(water_df[,'TKN'])
+water_df[,'Location'] <- as.factor(water_df[,'Location'])
+sapply(water_df,class)
 
-# change data type: numeric -> factor 
-# for boxplot 
-water_df[,'LOCATION'] <- as.factor(water_df[,'LOCATION'])
-
-# do blox plot
 library(ggplot2)
 # Location: 1=calumet, 2=egan,3=hanover park,
 #           4=kirie,5=lemont,6=obrien,7=southwest,8=west side
-bplot <- ggplot(water_df, aes(x = LOCATION, y=TKN,fill=LOCATION)) + 
+bplot <- ggplot(water_df, aes(x = Location, y = TKN,fill = Location, group = Location)) + 
                 geom_boxplot(alpha = 0.7) +
-                scale_x_discrete(breaks=c("1","2","3","4","5","6"),
-                   labels=c("Calumet", "Egan", "Hanover Park","Kirie","Lemont","Obrien"))
+                scale_x_discrete(breaks=c("1","2","3","4","5","6","7","8"),
+                                 labels=c("Calumet", "Egan", "Hanover Park","Kirie",
+                                          "Lemont","Obrien","South west","West side"))
 print(bplot)
 
-# outliers visualization
-hist <- ggplot(data=water_df, aes(water_df$TKN)) + 
-  geom_histogram(col="black", 
-                 aes(fill=..count..), 
-                 alpha = .7) + 
-                 labs(title="Histogram for TKN") +
-                 labs(x="TKN(mg/L)", y="Count")
-print(hist)
 
-# remove outliers by condition
-new_water_df <- water_df[water_df[, "TKN"] <= 50,]
+# hist <- ggplot(data=water_df, aes(water_df$TKN)) + 
+#  geom_histogram(col="black", 
+#                 aes(fill=..count..), 
+#                 alpha = .7) + 
+#                 labs(title="Histogram for TKN") +
+#                 labs(x="TKN(mg/L)", y="Count")
+# print(hist)
 
 
+# make a new box plot for better look
+bplocation <- c("1","2","3","4", "5", "6","8")
+bpwater_df <- water_df[water_df[, "Location"] == bplocation,]
 
-new_bplot <- ggplot(new_water_df, aes(x = LOCATION, y=TKN,fill=LOCATION)) + 
+bpwater_df[,'Location'] <- as.factor(bpwater_df[,'Location'])
+
+newbplot <- ggplot(bpwater_df, aes(x = Location, y = TKN, fill = Location)) + 
   geom_boxplot(alpha = 0.7) +
-  scale_x_discrete(breaks=c("1","2","3","4","5","6"),
-                   labels=c("Calumet", "Egan", "Hanover Park","Kirie","Lemont","Obrien"))
-print(new_bplot)
+  scale_x_discrete(breaks=c("1","2","3","4", "5", "6", "8"),
+                   labels=c("Calumet","Egan","Hanover park","Kirie",
+                            "Lemont","Obrien","west side"))
+print(newbplot)
 
-new_hist <- ggplot(data=new_water_df, aes(new_water_df$TKN)) + 
-  geom_histogram(col="black", 
-                 aes(fill=..count..), 
-                 alpha = .7) + 
-  labs(title="Histogram for TKN") +
-  labs(x="TKN(mg/L)", y="Count")
-print(new_hist)
 
-# do anova test on TKN
-anova_R <- aov(TKN ~ LOCATION, data = new_water_df)
-summary(anova_R) # f-value = 496.5
+# Do anova test
+anova_R <- aov(TKN ~ Location, data = water_df)
+summary(anova_R)
 
 # calculate critical value
 alpha_05 <- .05
 criticalValue_05 = qf(p = 1 - alpha_05
-                   , df1 = length(unique(new_water_df$LOCATION)) - 1
-                   , df2 = length(new_water_df$TKN) - length(unique(new_water_df$LOCATION)))
+                   , df1 = length(unique(water_df$Location)) - 1
+                   , df2 = length(water_df$TKN) - length(unique(water_df$Location)))
 
 
 # H0: The mean of TKN of different location are equal.
 # H1: The mean of TKN of different location are not all equal.
-ifelse(496.5 >= criticalValue, "Reject H0", 
-                              "Fail to reject H0")
-
-# why F value can be so large
+# 1052 is the F value calculated by anova.
+ifelse(1052 >= criticalValue, "Reject H0", 
+                             "Fail to reject H0")
