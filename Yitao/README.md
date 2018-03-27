@@ -16,9 +16,7 @@ We want to add location of these water plants as a dummy variable. We are going 
 
    ![幕快照 2018-03-26 17.55.3](https://i.imgur.com/i6Wqfg8.jpg)
 
-   - It seems that there are too much outliers in "South west" water plant
-
-     so I draw another boxplot without this location.
+   - It seems that there are too much outliers in "South west" water plant so I draw another boxplot without this location.
 
    ![ew boxplo](https://i.imgur.com/acXQwWY.jpg)
 
