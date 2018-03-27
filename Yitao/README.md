@@ -4,7 +4,7 @@
 
 Total Kjeldahl Nitrogen (TKN) is the U.S. EPA-approved parameter used to measure organic nitrogen and ammonia. The TKN content of influent municipal wastewater is typically between 35 and 60 mg/L(mg/kg).
 
-###Problem definition
+### Problem definition
 
 We want to add location of these water plants as a dummy variable. We are going to use ANOVA-test p-value approach to compare data for TKN (target variable) from the 8 waste water treatment plants to see if the means are equal. If the means are not equal, we will use dummy variables to differentiate between the waste water treatment plants. 
 
@@ -26,8 +26,8 @@ We want to add location of these water plants as a dummy variable. We are going 
 
 3. Set null hypothesis and alternative hypothesis 
 
-   - $H_0: $ The mean of TKN of different location are equal.
-   - $H_1: $ The mean of TKN of different location are not all equal.
+   - H0: The mean of TKN of different location are equal.
+   - H1: The mean of TKN of different location are not all equal.
 
 4. Do ANOVA test on TKN based on different locations.
 
@@ -35,13 +35,13 @@ We want to add location of these water plants as a dummy variable. We are going 
    | ------------ | ---: | ------: | -------: | ------: | -----: |
    | **Location** |    7 | 5.6e+06 | 8.04e+05 |    1052 | <2e-16 |
    
-   | Alpha        |   .10|   .05   |  .025    |   .01 |
-   | :----------  | ----:| ----:   | ----:    | ----: |
-   |  **F value** | 1.717| 2.010   | 2.288    | 2.640 |
+   | Alpha        |   .10| .75|  .05   |  .025    |   .01 |
+   | :----------  | ----:| ---:   |----:   | ----:    | ----: |
+   |  **F value** | 1.717| 1.934|2.010   | 2.288    | 2.640 |
 
-- Reject $H_0$ for all alpha.
+- Reject H0 for all alpha.
 
-###Further improvement
+### Further improvement
 
 - Many other variables such as depth increment can effect the value of TKN.
 - Outliers have really high value and there might be some reasons behind.
@@ -59,7 +59,8 @@ We've already had the zip code and address of these water plants. We want draw C
 3. Find population data with ZIP Code. 
 4. By the density of population, make a heat map on the original graph.![ook county demographi](https://i.imgur.com/89KKoX3.jpg)
 
-
+### Result analysis
+- More water plants tend to be built in low population areas.
 
 ### Further improvement 
 
