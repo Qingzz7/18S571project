@@ -34,11 +34,10 @@ We want to add location of these water plants as a dummy variable. We are going 
    |              |   Df |  Sum Sq |  Mean Sq | F value | Pr(>F) |
    | ------------ | ---: | ------: | -------: | ------: | -----: |
    | **Location** |    7 | 5.6e+06 | 8.04e+05 |    1052 | <2e-16 |
-
-
-| Alpha       |   .10 |   .05 |  .025 |   .01 |
-| :---------- | ----: | ----: | ----: | ----: |
-| **F value** | 1.717 | 2.010 | 2.288 | 2.640 |
+   
+   | Alpha        |   .10|   .05   |  .025    |   .01 |
+   | :----------  | ----:| ----:   | ----:    | ----: |
+   |  **F value** | 1.717| 2.010   | 2.288    | 2.640 |
 
 - Reject $H_0$ for all alpha.
 
