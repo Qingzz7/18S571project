@@ -20,7 +20,7 @@ library(ggplot2)
 p<-ggplot(wastewater, aes(x=TKN))+
   geom_histogram(color="black", fill="white")+
   facet_grid(Location ~ .)
-
+#qq plots
 qplot(sample = TKN, data = wastewater, color=Location)+
   labs(title="TKN according to the Location", y="mg/L concentration")
 
