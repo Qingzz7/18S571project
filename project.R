@@ -10,6 +10,24 @@ sapply(wastewater, class)
 #       X      BOD5       TKN     NH3.N     P.TOT        SS      FLOW  Rainfall  Location 
 #"integer" "integer" "integer" "integer" "integer" "integer" "integer" "numeric" "integer" 
 summary(wastewater)
+library(pastecs)
+library(boot)
+options(scipen=100)
+options(digits=2)
+stat.desc(wastewater[c("BOD5","TKN","NH3.N","P.TOT","SS","FLOW","Rainfall")])
+library(ggplot2)
+#histgram
+p<-ggplot(wastewater, aes(x=TKN))+
+  geom_histogram(color="black", fill="white")+
+  facet_grid(Location ~ .)
+
+qplot(sample = TKN, data = wastewater, color=Location)+
+  labs(title="TKN according to the Location", y="mg/L concentration")
+
+table <- aggregate(wastewater[c("BOD5","TKN","NH3.N","P.TOT","SS","FLOW","Rainfall")],by=list(Locatin=wastewater$Location), mean, na.rm=TRUE)
+mean <- aggregate(. ~ Location, wastewater, mean)
+sd <- aggregate(. ~ Location, wastewater, sd)
+IQR <- aggregate(. ~ Location, wastewater, IQR)
 #standard deviation for each numeric attribute
 sapply(wastewater[,1-9],sd)
 correlations <- cor(wastewater[,1-9])
@@ -74,6 +92,8 @@ ggplot(subset(df, Location == "southwest"), aes(x = variable, y = value, color =
   geom_bar(stat = "identity", fill = "white", width = 0.8) + ggtitle("barplot of location southwest")
 ggplot(subset(df, Location == "westside"), aes(x = variable, y = value, color = variable)) + 
   geom_bar(stat = "identity", fill = "white", width = 0.8) + ggtitle("barplot of location westside")
+
+
 
 
 
