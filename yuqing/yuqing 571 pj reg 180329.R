@@ -13,18 +13,15 @@
 
 df4=read.csv('completeMwrd_03_28_2018.csv',header = TRUE,sep = ',',stringsAsFactors=FALSE)
 summary(df4)
-dfn=df4[,-1]
-# result is better if treat location as numeric
-# dfn$Location=as.character(dfn$Location)
+dfn=df4[,-1]  
 summary(dfn)  
 
-# Scale whole dataset for future models since some models prefer standardized predictors
-dfn[,-8]=data.frame(scale(dfn[,-8],center = FALSE,scale=TRUE))  
+# Normalize whole dataset for future models since some models prefer standardized predictors
+dfn=data.frame(scale(dfn[,1:7],center=FALSE))  
 
-# Do log tranformation to see if it improves the result
-# dfn[,-(7:8)]=log(dfn[,-(7:8)])
-# No, the reuslt is worse
-  
+head(dfn)
+dfn<-data.frame(dfn,"Location"=df4$Location)
+head(dfn)
 # split training and testing data set
 library('caret')
 set.seed(0)
@@ -45,11 +42,13 @@ controlParameter=trainControl(method = "cv",number = 10,savePredictions = TRUE)
 # models related information: http://topepo.github.io/caret/train-models-by-tag.html
 
 # Basic linear model
-lm0 =glm(TKN ~., data = train)
+lm0 =lm(TKN ~.,data = train)
 par(mfrow=c(2,2)) #combine separate plots into one figure 
 plot(lm0)
+summary(lm0)
 
-lm_model=train(TKN ~., data=train, method="lm", trControl=controlParameter)
+
+lm_model=train(log(TKN) ~., data=train, method="lm", trControl=controlParameter)
 lm_pred=predict(lm_model,test)
 
 #library(leaps)
@@ -70,9 +69,10 @@ step_model=train(TKN ~., data=train, method = 'leapSeq', trControl=controlParame
 step_pred=predict(step_model,test)
 
 
-# library(Matrix)
-# library(foreach)
-# library(glmnet)
+
+library(Matrix)
+library(foreach)
+library(glmnet)
 
 # The lasso
 lassoGrid=expand.grid(alpha=1,lambda=c(0,5,0.0001))
@@ -92,7 +92,11 @@ elas_model=train(TKN ~., data=train, method = 'glmnet', trControl=controlParamet
 #elas_model=cv.glmnet(x.train,y.train,type.measure="mse",family="gaussian")
 elas_pred=predict(elas_model,test)
 
-
+#Principal Components Regression
+library(pls)
+set.seed(2)
+pcr_model<-train(TKN~.,data=train, method='pcr',trControl=controlParameter)
+pcr_pred=predict(pcr_model,test)
 
 # calculate the MSE of test data for each model to evaluate its performance
 lm_mse=mean((y.test - lm_pred)^2)
@@ -103,6 +107,7 @@ step_mse=mean((y.test - step_pred)^2)
 lasso_mse=mean((y.test - lasso_pred)^2)
 ridge_mse=mean((y.test - ridge_pred)^2)
 elas_mse=mean((y.test - elas_pred)^2)
+pcr_mse=mean((y.test-pcr_pred)^2)
 
 
 
@@ -116,7 +121,7 @@ lasso_r2=sum((lasso_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
 ridge_r2=sum((ridge_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
 lm_r2=sum((lm_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
 elas_r2=sum((elas_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-
+pcr_r2 =sum((pcr_pred-   mean(y.test))^2)/sum((y.test - mean(y.test))^2)
 
 
 
@@ -209,7 +214,9 @@ elas_model1=train(TKN ~., data=train1, method = 'glmnet', trControl=controlParam
 #elas_model=cv.glmnet(x.train,y.train,type.measure="mse",family="gaussian")
 elas_pred1=predict(elas_model1,test1)
 
-
+#Principal Component Regression subset 1
+pcr_model1=train(TKN~.,data=train1,method='pcr',trControl=controlParameter)
+pcr_pred1=predict(pcr_model1,test1)
 
 # calculate the MSE of test data for each model to evaluate its performance
 lm_mse1=mean((y.test1 - lm_pred1)^2)
@@ -220,7 +227,7 @@ step_mse1=mean((y.test1 - step_pred1)^2)
 lasso_mse1=mean((y.test1 - lasso_pred1)^2)
 ridge_mse1=mean((y.test1 - ridge_pred1)^2)
 elas_mse1=mean((y.test1 - elas_pred1)^2)
-
+pcr_mse1=mean((y.test1 - pcr_pred1)^2)
 
 # calculate the R**2 of test data for each model to evaluate its performance
 lm_r21=sum((lm_pred1 - mean(y.test1))^2)/sum((y.test1 - mean(y.test1))^2)
@@ -232,7 +239,7 @@ lasso_r21=sum((lasso_pred1 - mean(y.test1))^2)/sum((y.test1 - mean(y.test1))^2)
 ridge_r21=sum((ridge_pred1 - mean(y.test1))^2)/sum((y.test1 - mean(y.test1))^2)
 lm_r21=sum((lm_pred1 - mean(y.test1))^2)/sum((y.test1 - mean(y.test1))^2)
 elas_r21=sum((elas_pred1 - mean(y.test1))^2)/sum((y.test1 - mean(y.test1))^2)
-
+pcr_r21=sum((pcr_pred1 - mean(y.test1))^2)/sum((y.test1 - mean(y.test1))^2)
 
 
 
@@ -283,6 +290,9 @@ elas_model2=train(TKN ~., data=train2, method = 'glmnet', trControl=controlParam
 #elas_model=cv.glmnet(x.train,y.train,type.measure="mse",family="gaussian")
 elas_pred2=predict(elas_model2,test2)
 
+#Principal Component Regression
+pcr_model2=train(TKN~., data=train2, method='pcr',trControl=controlParameter)
+pcr_pred2=predict(pcr_model2,test2)
 
 
 # calculate the MSE of test data for each model to evaluate its performance
@@ -295,7 +305,7 @@ lasso_mse2=mean((y.test2 - lasso_pred2)^2)
 ridge_mse2=mean((y.test2 - ridge_pred2)^2)
 ridge_mse2test=caret::postResample(ridge_pred2,y.test2)[1]
 elas_mse2=mean((y.test2 - elas_pred2)^2)
-
+pcr_mse2=mean((y.test2 - pcr_pred2)^2)
 
 
 # calculate the R**2 of test data for each model to evaluate its performance
@@ -311,8 +321,7 @@ lasso_r22=sum((lasso_pred2 - mean(y.test2))^2)/sum((y.test2 - mean(y.test2))^2)
 ridge_r22=sum((ridge_pred2 - mean(y.test2))^2)/sum((y.test2 - mean(y.test2))^2)
 lm_r22=sum((lm_pred2 - mean(y.test2))^2)/sum((y.test2 - mean(y.test2))^2)
 elas_r22=sum((elas_pred2 - mean(y.test2))^2)/sum((y.test2 - mean(y.test2))^2)
-
-
+pcr_r22 = sum((pcr_pred2 - mean(y.test2))^2)/sum((y.test2 - mean(y.test2))^2)
 
 
 
