@@ -13,17 +13,11 @@
 
 df4=read.csv('completeMwrd_03_28_2018.csv',header = TRUE,sep = ',',stringsAsFactors=FALSE)
 summary(df4)
-dfn=df4[,-1]
-# result is better if treat location as numeric
-# dfn$Location=as.character(dfn$Location)
+dfn=df4[,-1]  
 summary(dfn)  
 
-# Scale whole dataset for future models since some models prefer standardized predictors
-dfn[,-8]=data.frame(scale(dfn[,-8],center = FALSE,scale=TRUE))  
-
-# Do log tranformation to see if it improves the result
-# dfn[,-(7:8)]=log(dfn[,-(7:8)])
-# No, the reuslt is worse
+# Normalize whole dataset for future models since some models prefer standardized predictors
+dfn=data.frame(scale(dfn))  
   
 # split training and testing data set
 library('caret')
@@ -70,9 +64,9 @@ step_model=train(TKN ~., data=train, method = 'leapSeq', trControl=controlParame
 step_pred=predict(step_model,test)
 
 
-# library(Matrix)
-# library(foreach)
-# library(glmnet)
+library(Matrix)
+library(foreach)
+library(glmnet)
 
 # The lasso
 lassoGrid=expand.grid(alpha=1,lambda=c(0,5,0.0001))
@@ -107,17 +101,21 @@ elas_mse=mean((y.test - elas_pred)^2)
 
 
 # calculate the R**2 of test data for each model to evaluate its performance
-lm_r2=sum((lm_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-#allsub_mse=sum((allsub_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-forward_r2=sum((forward_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-backward_r2=sum((backward_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-step_r2=sum((step_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-lasso_r2=sum((lasso_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-ridge_r2=sum((ridge_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-lm_r2=sum((lm_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
-elas_r2=sum((elas_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# lm_r2=sum((lm_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# allsub_mse=sum((allsub_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# forward_r2=sum((forward_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# backward_r2=sum((backward_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# step_r2=sum((step_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# lasso_r2=sum((lasso_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# ridge_r2=sum((ridge_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# lm_r2=sum((lm_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
+# elas_r2=sum((elas_pred - mean(y.test))^2)/sum((y.test - mean(y.test))^2)
 
-
+require(miscTools)
+lm_r2=miscTools::rSquared(y.test,resid = y.test-lm_pred)
+n=nrow(x.test)
+q=ncol(x.test)  
+lm_adjr2=1-((1-lm_r2^2)*(n-1)/(n-q))
 
 
 
