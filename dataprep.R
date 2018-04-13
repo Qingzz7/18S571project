@@ -218,7 +218,7 @@ calumet.data.all.rain<-merge(x=calumet.data.all,y=rainfall.data,all.x=T)
 
 
 #Need to add location locator
-#Location 1=calumet, 2=egan,3=calumet park,4=kirie,5=lemont,6=obrien,7=southwest,8=west side
+#Location 1=calumet, 2=egan,3= hanover park,4=kirie,5=lemont,6=obrien,7=southwest,8=west side
 Location<-rep(1,nrow(calumet.data.all.rain))
 calumet.data.all.rain<-data.frame(calumet.data.all.rain,"Location"=Location)
 summary(calumet.data.all.rain)
@@ -1547,9 +1547,10 @@ library(VIM)
 all.mwrd<-rbind(calumet.data.all.rain,egan.data.all.rain,hanover.data.all.rain,kirie.data.all.rain,lemont.data.all.rain,obrien.data.all.rain,southwest.data.all.rain,west.data.all.rain)
 summary(all.mwrd)
 mice_plot<-aggr(all.mwrd, col=c('navyblue','yellow'),numbers=TRUE, sortVars=TRUE,labels=names(all.mwrd.clean[,2]),cex.axis=0.7,gap=3,ylab=c("Missing data","Pattern"))
-clean<-(all.mwrd$FLOW==0|is.na(all.mwrd$P.TOT)|is.na(all.mwrd$SS)|is.na(all.mwrd$TKN))
+clean<-(all.mwrd$FLOW==0|is.na(all.mwrd$P.TOT)|is.na(all.mwrd$SS)|is.na(all.mwrd$TKN)|is.na(all.mwrd$BOD5))
 all.mwrd.clean<-all.mwrd[!clean,]
-all.mwrd.clean
+
+write.csv(all.mwrd.clean,'C:/Users/boltz/Desktop/CSP571/project/completedata/completeMwrd_BOD5_04_08_2018.csv',row.names=FALSE)
 summary(all.mwrd.clean)
 summary(all.mwrd)
 
@@ -1567,6 +1568,6 @@ complete.mwrd<-complete(all.mwrd.clean.imputed,3)
 complete.mwrd<-data.frame("DATE"=all.mwrd.clean$DATE,complete.mwrd)
 #No NA's in BOD 5
 summary(complete.mwrd)
-write.csv(complete.mwrd,'C:/Users/boltz/Desktop/CSP571/project/completedata/completeMwrd_03_28_2018.csv',row.names=FALSE)
+#write.csv(all.mwrd,'C:/Users/boltz/Desktop/CSP571/project/completedata/full_Mwrd_04_10_2018.csv',row.names=FALSE)
 
 

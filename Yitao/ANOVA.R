@@ -8,7 +8,7 @@
 
 # Read data
 # Please change the library manually to read the file.
-water_df <- read.csv("~/Desktop/completeMWRD.csv",  header=TRUE, sep=",")
+water_df <- read.csv('completeMwrd_03_28_2018.csv',header = TRUE,sep = ',',stringsAsFactors=FALSE)
 head(water_df)
 
 water_df[,'Location'] <- as.factor(water_df[,'Location'])
@@ -35,19 +35,21 @@ print(bplot)
 
 
 # make a new box plot for better look
-bplocation <- c("1","2","3","4", "5", "6","8")
+bplocation <- c("1","2","3","4", "5", "6","7","8")
 bpwater_df <- water_df[water_df[, "Location"] == bplocation,]
 
 bpwater_df[,'Location'] <- as.factor(bpwater_df[,'Location'])
 
 newbplot <- ggplot(bpwater_df, aes(x = Location, y = TKN, fill = Location)) + 
   geom_boxplot(alpha = 0.7) +
-  scale_x_discrete(breaks=c("1","2","3","4", "5", "6", "8"),
+  scale_x_discrete(breaks=c("1","2","3","4", "5", "6", "7","8"),
                    labels=c("Calumet","Egan","Hanover park","Kirie",
-                            "Lemont","Obrien","west side"))
+                            "Lemont","Obrien","southwest side","west side"))
 print(newbplot)
 
+water_calumet=subset(dfn,dfn$Location<=2)
 
+dfn2=subset(dfn,dfn$Location<7)
 # Do anova test
 anova_R <- aov(TKN ~ Location, data = water_df)
 summary(anova_R)
