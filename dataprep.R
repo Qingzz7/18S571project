@@ -1550,12 +1550,64 @@ mice_plot<-aggr(all.mwrd, col=c('navyblue','yellow'),numbers=TRUE, sortVars=TRUE
 clean<-(all.mwrd$FLOW==0|is.na(all.mwrd$P.TOT)|is.na(all.mwrd$SS)|is.na(all.mwrd$TKN)|is.na(all.mwrd$BOD5))
 all.mwrd.clean<-all.mwrd[!clean,]
 
-write.csv(all.mwrd.clean,'C:/Users/boltz/Desktop/CSP571/project/completedata/completeMwrd_BOD5_04_08_2018.csv',row.names=FALSE)
+
+
+
+cookCounty.pop<-5194675
+
+egan.pop<-160735
+egan.mile<-44
+egan.density<-egan.pop/egan.mile
+
+hanover.pop<-56532
+hanover.mile<-11.2
+hanover.density<-hanover.pop/hanover.mile
+
+kirie.pop<-264000
+kirie.mile<-65.2
+kirie.density<-kirie.pop/kirie.mile
+
+lemont.pop<-20000
+lemont.mile<-8.58
+lemont.density<-lemont.pop/lemont.mile
+
+obrien.pop<-1314000
+obrien.mile<-143
+obrien.density<-obrien.pop/obrien.mile
+
+southwest.pop<-2300000/2
+southwest.mile<-260/2
+southwest.density<-southwest.pop/southwest.mile
+
+westside.mile<-260/2
+westside.pop<-2300000/2
+westside.density<-westside.pop/westside.mile
+
+calumet.pop<-cookCounty.pop-egan.pop-hanover.pop-kirie.pop-lemont.pop-obrien.pop-southwest.pop-westside.pop
+calumet.mile<-300
+calumet.density<-calumet.pop/calumet.mile
+
+
+
+Population.density<-rep(0,nrow(all.mwrd.clean))
+Population.density[all.mwrd.clean$Location==1]<-calumet.density
+Population.density[all.mwrd.clean$Location==2]<-egan.density
+Population.density[all.mwrd.clean$Location==3]<-hanover.density
+Population.density[all.mwrd.clean$Location==4]<-kirie.density
+Population.density[all.mwrd.clean$Location==5]<-lemont.density
+Population.density[all.mwrd.clean$Location==6]<-obrien.density
+Population.density[all.mwrd.clean$Location==7]<-southwest.density
+Population.density[all.mwrd.clean$Location==8]<-westside.density
+
+all.mwrd.clean<-data.frame(all.mwrd.clean,"Pop.density"=Population.density)
+
+setwd('C:/Users/boltz/Documents/GitHub/18S571project/completedata')
+write.csv(all.mwrd.clean,'completeMwrd_BOD5.csv',row.names=FALSE)
 summary(all.mwrd.clean)
 summary(all.mwrd)
 
 
-
+#Location 1=calumet, 2=egan,3= hanover park,4=kirie,5=lemont,6=obrien,7=southwest,8=west side
 
 #9.5% of the BOD5 is missing, assuming missing completely at random
 
