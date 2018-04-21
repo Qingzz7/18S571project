@@ -1602,7 +1602,7 @@ Population.density[all.mwrd.clean$Location==8]<-westside.density
 all.mwrd.clean<-data.frame(all.mwrd.clean,"Pop.density"=Population.density)
 
 setwd('C:/Users/boltz/Documents/GitHub/18S571project/completedata')
-write.csv(all.mwrd.clean,'completeMwrd_BOD5.csv',row.names=FALSE)
+write.csv(all.mwrd.clean,'completeMwrd_BOD5.csv',row.names=TRUE)
 summary(all.mwrd.clean)
 summary(all.mwrd)
 
