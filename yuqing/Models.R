@@ -98,9 +98,9 @@ elas_model=train(modelForm, data=train, method = 'glmnet', trControl=controlPara
 pcr_model<-train(modelForm,data=train, method='pcr',trControl=controlParameter)
 
 set.seed(0)
-#random200_model_season_month=train(modelForm,data=train,method='rf',ntree=150,trControl=controlParameter)
-#saveRDS(random200_model_season_month,file="random200_model.rds")
-random200_model<-readRDS("random200_model.rds")
+#random150_model=train(modelForm,data=train,method='rf',ntree=200,trControl=controlParameter)
+#saveRDS(random150_model_season_month,file="random150_model.rds")
+random150_model<-readRDS("random150_model.rds")
 set.seed(0)
 #xgblinear<-train(modelForm,data=train,method='xgbLinear',trControl=controlParameter,tunelength=4)
 #saveRDS(xgblinear,file="xgbLinear.rds")
@@ -115,7 +115,7 @@ ridge_pred<-predict(ridge_model,test)
 elas_pred<-predict(elas_model,test)
 pcr_pred<-predict(pcr_model,test)
 xgblinear_pred<-predict(xgblinear,test)
-random200_pred<-predict(random200_model,test)
+random150_pred<-predict(random150_model,test)
 
 # calculate the MSE of test data for each model to evaluate its performance
 lm_mse<-mean((y.test - lm_pred)^2)
@@ -127,7 +127,7 @@ ridge_mse<-mean((y.test - ridge_pred)^2)
 elas_mse<-mean((y.test - elas_pred)^2)
 pcr_mse<-mean((y.test-pcr_pred)^2)
 xgblinear_mse<-mean((y.test-xgblinear_pred)^2)
-random200_mse<-mean((y.test-random200_pred)^2)
+random150_mse<-mean((y.test-random150_pred)^2)
 
 #AdjR2
 lm_adjR2<-adjR2_test(lm_pred,y.test)
@@ -139,10 +139,10 @@ ridge_adjR2<-adjR2_test(ridge_pred,y.test)
 elas_adjR2<-adjR2_test(elas_pred,y.test)
 pcr_adjR2<-adjR2_test(pcr_pred,y.test)
 xgblinear_adjR2<-adjR2_test(xgblinear_pred,y.test)
-random200_adjR2<-adjR2_test(random200_pred,y.test)
+random150_adjR2<-adjR2_test(random150_pred,y.test)
 #Create Vectors for mse and adjR2
-adjR2<-c(lm_adjR2,forward_adjR2,backward_adjR2,step_adjR2,lasso_adjR2,ridge_adjR2,elas_adjR2,pcr_adjR2,xgblinear_adjR2,random200_adjR2)
-mse<-c(lm_mse,forward_mse,backward_mse,step_mse,lasso_mse,ridge_mse,elas_mse,pcr_mse,xgblinear_mse,random200_mse)
+adjR2<-c(lm_adjR2,forward_adjR2,backward_adjR2,step_adjR2,lasso_adjR2,ridge_adjR2,elas_adjR2,pcr_adjR2,xgblinear_adjR2,random150_adjR2)
+mse<-c(lm_mse,forward_mse,backward_mse,step_mse,lasso_mse,ridge_mse,elas_mse,pcr_mse,xgblinear_mse,random150_mse)
 #Dataframe for them
 Performance<-data.frame("AdjR^2"=adjR2,"MSE"=mse)
 rownames(Performance)<-modelNames
@@ -187,9 +187,9 @@ set.seed(0)
 xgbLinear_model.sqrt<-readRDS("xgbLinear_sqrt.rds")
 
 set.seed(0)
-#random200_model.sqrt<-train(modelForm,data=train,method='rf',trControl=controlParameter,ntree=200)
-#saveRDS(random200_model.sqrt,file="random200_model_sqrt.rds")
-random200_model.sqrt<-readRDS("random200_model_sqrt.rds")
+#random150_model.sqrt<-train(modelForm,data=train,method='rf',trControl=controlParameter,ntree=200)
+#saveRDS(random150_model.sqrt,file="random150_model_sqrt.rds")
+random150_model.sqrt<-readRDS("random150_model_sqrt.rds")
 
 #Prediction
 lm_pred<-predict(lm_model,test)
@@ -201,7 +201,7 @@ ridge_pred<-predict(ridge_model,test)
 elas_pred<-predict(elas_model,test)
 pcr_pred<-predict(pcr_model,test)
 xgblinear_pred<-predict(xgbLinear_model.sqrt,test)
-random200_pred<-predict(random200_model.sqrt,test)
+random150_pred<-predict(random150_model.sqrt,test)
 
 # calculate the MSE of test data for each model to evaluate its performance
 lm_mse<-mean((y.test - lm_pred)^2)
@@ -213,7 +213,7 @@ ridge_mse<-mean((y.test - ridge_pred)^2)
 elas_mse<-mean((y.test - elas_pred)^2)
 pcr_mse<-mean((y.test-pcr_pred)^2)
 xgblinear_mse<-mean((y.test-xgblinear_pred)^2)
-random200_mse<-mean((y.test-random200_pred)^2)
+random150_mse<-mean((y.test-random150_pred)^2)
 
 #adjuR2
 lm_adjR2<-adjR2_test(lm_pred,y.test)
@@ -225,16 +225,17 @@ ridge_adjR2<-adjR2_test(ridge_pred,y.test)
 elas_adjR2<-adjR2_test(elas_pred,y.test)
 pcr_adjR2<-adjR2_test(pcr_pred,y.test)
 xgblinear_adjR2<-adjR2_test(xgblinear_pred,y.test)
-random200_adjR2<-adjR2_test(random200_pred,y.test)
+random150_adjR2<-adjR2_test(random150_pred,y.test)
 
 #Create a vector for adjR2 and mse
-adjR2<-c(lm_adjR2,forward_adjR2,backward_adjR2,step_adjR2,lasso_adjR2,ridge_adjR2,elas_adjR2,pcr_adjR2,xgblinear_adjR2,random200_adjR2)
-mse<-c(lm_mse,forward_mse,backward_mse,step_mse,lasso_mse,ridge_mse,elas_mse,pcr_mse,xgblinear_mse,random200_mse)
+adjR2<-c(lm_adjR2,forward_adjR2,backward_adjR2,step_adjR2,lasso_adjR2,ridge_adjR2,elas_adjR2,pcr_adjR2,xgblinear_adjR2,random150_adjR2)
+mse<-c(lm_mse,forward_mse,backward_mse,step_mse,lasso_mse,ridge_mse,elas_mse,pcr_mse,xgblinear_mse,random150_mse)
 #Data Frame
-Performance<-data.frame("AdjR^2"=adjR2,"MSE"=mse)
+Performance.sqrt<-data.frame("AdjR^2"=adjR2,"MSE"=mse)
 rownames(Performance)<-modelNames
   
 Performance.sorted.sqrt<-Performance[order(-Performance$AdjR.2,Performance$MSE),]
 Performance.sorted.sqrt
 
-
+library(randomForest)
+fit4<-randomForest(modelForm,data=train,imporatnce=TRUE,ntree=2000)
