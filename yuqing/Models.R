@@ -23,7 +23,10 @@ adjR2_test<-function (pred,y.test){
   q<-ncol(x.test)  
   adjr2<-1-((1-r2^2)*(n-1)/(n-q))
 }
-
+get_Out<-function(data=water.data,row){
+ outlier<- water.data[c(row-1,row,row+1),]
+  
+}
 #Global Variables
 TARGET<-'BOD5'
 XVARS<- c("TKN", 'NH3.N','P.TOT', 'SS', 'FLOW', 'Rainfall', 'Location','Season','Pop.density')
@@ -182,6 +185,10 @@ x.test<-test[,XVARS]
 # perform cross-validtion on training data set
 controlParameter=trainControl(method = "cv",number = 10,savePredictions = TRUE)
 # Models
+lm0<-lm(modelForm,data=train)
+par(mfrow=c(2,2))
+plot(lm0)
+
 set.seed(571)
 lm_model.sqrt<-train(modelForm,data=train,method='lm',trControl=controlParameter)
 set.seed(571)
