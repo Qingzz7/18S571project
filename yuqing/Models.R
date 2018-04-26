@@ -34,13 +34,13 @@ modelForm<-createModelFormula(TARGET,XVARS)
 
 
 #Read In Data
-setwd('C:/Users/boltz/Documents/GitHub/18S571project/completedata')
+setwd('~/Documents/GitHub/18S571project/completedata')
 water.data.raw<-read.csv('completeMwrd_BOD5.csv',header = TRUE,sep = ',',stringsAsFactors=FALSE)
 rownames(water.data.raw)<-water.data.raw$X
-water.data.raw<-water.data.raw[,-1]
+water.data<-water.data.raw[,-1]
 head(water.data)
 #Separate Date in 3 columns Year, Month, Day
-water.data<-separate(water.data.raw,DATE,c('Year','Month','Day'),sep='-',remove=TRUE)
+water.data<-separate(water.data,DATE,c('Year','Month','Day'),sep='-',remove=TRUE)
 head(water.data)
 water.data<-water.data[,-c(1,3)]
 
@@ -66,7 +66,8 @@ head(water.data)
 sapply(water.data,class)  
 
 #Cor Matrix
-cor(water.data[,c(1:7,9)])
+c=cor(water.data[,c(1:7,9)])
+corrplot::corrplot(c)
 
 #Scale Data
 water.data.scale<-scale(water.data[,c(1:7,9)],center=FALSE)
