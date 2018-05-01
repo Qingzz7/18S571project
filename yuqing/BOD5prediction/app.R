@@ -37,55 +37,61 @@ ui <- fluidPage(
    
    # Sidebar with input options
    sidebarLayout(
+     
       sidebarPanel(
         
          sliderInput("TKN",
                      "TKN",
+                     value = 27,
                      min = 0,
                      max = 900),
          sliderInput("NH3.N",
                      "NH3.N",
+                     value = 15.2,
                      min = 0,
                      max = 50),
          sliderInput("P.TOT",
                      "P.TOT",
+                     value = 4.6,
                      min = 0,
                      max = 320),
          sliderInput("SS",
                      "SS",
+                     value = 154,
                      min = 0,
                      max = 19300),
          sliderInput("FLOW",
                      "FLOW",
+                     value = 132,
                      min = 0,
                      max = 950),
          sliderInput("Rainfall",
                      "Rainfall",
+                     value = 0.1,
                      min = 0,
                      max = 10),
-         numericInput("Location","Location",min = 1,max = 7,step = 1),
+         numericInput("Location","Location",value =1,  min = 1,max = 7,step = 1),
          sliderInput("pop.density",
                      "population density",
+                     value = 5048,
                      min = 2000,
                      max = 10000),
-         numericInput("season","season",min = 1,max = 4,step = 1),
+         numericInput("season","season",value = 1 ,min = 1,max = 4,step = 1),
          # Choose Model to fit from Dropdown Menu
          selectInput("model",                       # Name of input
                      "Model Type",                  # Display Label
                      choices = c("None" = "none",   # Available choices in the dropdown
                                  "Linear" = "lm"))
-        )
-      ),
+        ),
       
       # Show a plot of the generated distribution
       mainPanel(
         textOutput('predict BOD5'),
         tabPanel("Summary", verbatimTextOutput("summary")),
         tabPanel("Linear Regression Summary", verbatimTextOutput("Linearsummary"))
-        
       )
       
-   
+    )
 )
 
 
@@ -93,7 +99,8 @@ ui <- fluidPage(
 # Define server 
 server <- function(input, output) {
   
-  lm1=reactive({train(BOD5 ~.,data=train,method='lm',trControl=controlParameter)}) 
+  
+  lm1 <- reactive({train(BOD5 ~.,data=train,method='lm',trControl=controlParameter)}) 
   output$RegSum <- renderPrint({summary(lm1())})
   
 
