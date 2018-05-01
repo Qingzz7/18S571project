@@ -69,7 +69,7 @@ sapply(water.data,class)
 
 #Cor Matrix
 
-#pairs.panels(water.data[,c(1:7,9)],lm=TRUE)
+pairs.panels(water.data[,c(1:7,9)],lm=TRUE)
 
 
 #Scale Data
