@@ -34,7 +34,7 @@ modelForm<-createModelFormula(TARGET,XVARS)
 
 
 #Read In Data
-setwd('~/Documents/GitHub/18S571project/completedata')
+#setwd('~/Documents/GitHub/18S571project/completedata')
 water.data.raw<-read.csv('completeMwrd_BOD5.csv',header = TRUE,sep = ',',stringsAsFactors=FALSE)
 rownames(water.data.raw)<-water.data.raw$X
 water.data<-water.data.raw[,-1]
@@ -64,6 +64,9 @@ water.data<-water.data[,-1]
 head(water.data)
 #Check all the columns are the correct data type
 sapply(water.data,class)  
+
+# save the data
+write.csv(water.data, file = "completeMwrd_BOD5_processed.csv")
 
 #Cor Matrix
 c=cor(water.data[,c(1:7,9)])
