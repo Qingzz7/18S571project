@@ -5,6 +5,7 @@ library('Matrix')
 library('foreach')
 library('glmnet')
 library('pls')
+library('psych')
 
 #Create model form function
 createModelFormula <- function(TARGET, XVARS, includeIntercept = TRUE){
@@ -23,24 +24,24 @@ adjR2_test<-function (pred,y.test){
   q<-ncol(x.test)  
   adjr2<-1-((1-r2^2)*(n-1)/(n-q))
 }
-get_Out<-function(data=water.data,row){
- outlier<- water.data[c(row-1,row,row+1),]
+get_Out<-function(row){
+ outlier<- water.data.raw[c(row-1,row,row+1),]
   
 }
+summary(water.data)
 #Global Variables
 TARGET<-'BOD5'
 XVARS<- c("TKN", 'NH3.N','P.TOT', 'SS', 'FLOW', 'Rainfall', 'Location','Season','Pop.density')
 modelForm<-createModelFormula(TARGET,XVARS)
 
-
 #Read In Data
-#setwd('~/Documents/GitHub/18S571project/completedata')
+setwd('C:/Users/boltz/Documents/GitHub/18S571project/completedata')
 water.data.raw<-read.csv('completeMwrd_BOD5.csv',header = TRUE,sep = ',',stringsAsFactors=FALSE)
 rownames(water.data.raw)<-water.data.raw$X
-water.data<-water.data.raw[,-1]
-head(water.data)
+water.data.raw<-water.data.raw[,-1]
+head(water.data.raw)
 #Separate Date in 3 columns Year, Month, Day
-water.data<-separate(water.data,DATE,c('Year','Month','Day'),sep='-',remove=TRUE)
+water.data<-separate(water.data.raw,DATE,c('Year','Month','Day'),sep='-',remove=TRUE)
 head(water.data)
 water.data<-water.data[,-c(1,3)]
 
@@ -63,19 +64,32 @@ water.data<-data.frame(water.data,'Season'=as.factor(Season))
 water.data<-water.data[,-1]
 head(water.data)
 #Check all the columns are the correct data type
+
 sapply(water.data,class)  
 
-# save the data
-write.csv(water.data, file = "completeMwrd_BOD5_processed.csv")
-
 #Cor Matrix
-c=cor(water.data[,c(1:7,9)])
-corrplot::corrplot(c)
+
+#pairs.panels(water.data[,c(1:7,9)],lm=TRUE)
+
 
 #Scale Data
+
 water.data.scale<-scale(water.data[,c(1:7,9)],center=FALSE)
 water.data.scale<-data.frame('Location'=water.data$Location,'Season'=water.data$Season,water.data.scale)
 head(water.data.scale)
+#Forshiny
+Location.name<-rep("None",nrow(water.data.scale))
+Location.name[water.data.scale$Location==1]<-"Calumet"
+Location.name[water.data.scale$Location==2]<-"Egan"
+Location.name[water.data.scale$Location==3]<-"Hanover Park"
+Location.name[water.data.scale$Location==4]<-"Kirie"
+Location.name[water.data.scale$Location==5]<-"Lemont"
+Location.name[water.data.scale$Location==6]<-"Obrien"
+Location.name[water.data.scale$Location==7]<-"Southwest"
+Location.name[water.data.scale$Location==8]<-"Westside"
+
+water.data.shiny<-data.frame("Location.name"=as.factor(Location.name),water.data.scale)
+head(water.data.shiny)
 #Check data type
 sapply(water.data.scale,class)
 dim(water.data.scale)
@@ -118,13 +132,13 @@ set.seed(571)
 pcr_model<-train(modelForm,data=train, method='pcr',trControl=controlParameter)
 
 set.seed(571)
-random200_model<-train(modelForm,data=train,method='rf',ntree=200,trControl=controlParameter)
-saveRDS(random200_model,file="random200_model.rds")
+#random200_model<-train(modelForm,data=train,method='rf',ntree=200,trControl=controlParameter)
+#saveRDS(random200_model,file="random200_model.rds")
 random200_model<-readRDS("random200_model.rds")
 set.seed(571)
-xgblinear<-train(modelForm,data=train,method='xgbLinear',trControl=controlParameter,tunelength=10)
-saveRDS(xgblinear,file="xgbLinear.rds")
-xgblinear<-readRDS("xgbLinear.rds")
+#xgblinear<-train(modelForm,data=train,method='xgbLinear',trControl=controlParameter,tunelength=10)
+#saveRDS(xgblinear,file="xgbLinear.rds")
+xgblinear<-readRDS("xgblinear.rds")
 #Prediction
 lm_pred<-predict(lm_model,test)
 forward_pred<-predict(forward_model,test)
@@ -160,16 +174,16 @@ elas_adjR2<-adjR2_test(elas_pred,y.test)
 pcr_adjR2<-adjR2_test(pcr_pred,y.test)
 xgblinear_adjR2<-adjR2_test(xgblinear_pred,y.test)
 random200_adjR2<-adjR2_test(random200_pred,y.test)
-#Create Vectors for mse and adjR2
 
+#Create Vectors for mse and adjR2
 adjR2<-c(lm_adjR2,forward_adjR2,backward_adjR2,step_adjR2,lasso_adjR2,ridge_adjR2,elas_adjR2,pcr_adjR2,xgblinear_adjR2,random200_adjR2)
 mse<-c(lm_mse,forward_mse,backward_mse,step_mse,lasso_mse,ridge_mse,elas_mse,pcr_mse,xgblinear_mse,random200_mse)
 #Dataframe for them
 modelNames<-c("Linear","Forward","Backward","StepWise","Lasso","Ridge","Elastic","Principal Component","Xtreme Gradient Boosting","Random Forest")
-Performance<-data.frame("AdjR^2"=adjR2,"MSE"=mse)
+Performance<-data.frame("MSE"=mse,"AdjR^2"=adjR2)
 rownames(Performance)<-modelNames
 #Sort by MSE
-Performance.sorted<-Performance[order(-Performance$AdjR.2,-Performance$MSE),]
+Performance.sorted<-Performance[order(Performance$MSE,-Performance$AdjR.2),]
 Performance.sorted
 
 #Data with a square root transformation
@@ -192,6 +206,12 @@ controlParameter=trainControl(method = "cv",number = 10,savePredictions = TRUE)
 lm0<-lm(modelForm,data=train)
 par(mfrow=c(2,2))
 plot(lm0)
+Out.16771<-get_Out(16771)
+Out.11452<-get_Out(11452)
+Out.15471<-get_Out(15471)
+Out.16771
+Out.11452
+Out.15471
 
 set.seed(571)
 lm_model.sqrt<-train(modelForm,data=train,method='lm',trControl=controlParameter)
@@ -213,14 +233,14 @@ set.seed(571)
 pcr_model.sqrt<-train(modelForm,data=train, method='pcr',trControl=controlParameter)
 
 set.seed(571)
-xgblinear.sqrt<-train(modelForm,data=train,method='xgbLinear',trControl=controlParameter,tunelength=10)
-saveRDS(xgblinear.sqrt,file="xgblinear_sqrt.rds")
+#xgblinear.sqrt<-train(modelForm,data=train,method='xgbLinear',trControl=controlParameter,tunelength=10)
+#saveRDS(xgblinear.sqrt,file="xgblinear_sqrt.rds")
 xgbLinear_model.sqrt<-readRDS("xgblinear_sqrt.rds")
 
 set.seed(571)
-random200_model.sqrt<-train(modelForm,data=train,method='rf',trControl=controlParameter,ntree=200)
-saveRDS(random200_model.sqrt,file="random5-0_model_sqrt.rds")
-#random500_model.sqrt<-readRDS("random500_model_sqrt.rds")
+#random200_model.sqrt<-train(modelForm,data=train,method='rf',trControl=controlParameter,ntree=200)
+#saveRDS(random200_model.sqrt,file="random200_model_sqrt.rds")
+random200_model.sqrt<-readRDS("random200_model_sqrt.rds")
 
 #Prediction
 lm_pred.sqrt<-predict(lm_model.sqrt,test)
@@ -270,10 +290,8 @@ modelNames<-c("Linear","Forward","Backward","StepWise","Lasso","Ridge","Elastic"
 rownames(Performance.sqrt)<-modelNames
 modelNames
 Performance.sqrt
-Performance.sorted.sqrt<-Performance.sqrt[order(-Performance.sqrt$AdjR2.sqrt,-Performance.sqrt$MSE.sqrt),]
+Performance.sorted.sqrt<-Performance.sqrt[order(Performance.sqrt$MSE.sqrt,-Performance.sqrt$AdjR2.sqrt),]
 Performance.sorted.sqrt
-Peformance.sorted
-
-
+Performance.sorted
 
 
