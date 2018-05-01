@@ -16,17 +16,22 @@ library('caret')
 
 # read data
 water.data<-read.csv('completeMwrd_BOD5_processed.csv',header = TRUE)
+water.data=water.data[,-1]
 #scale data
 water.data.scale<-scale(water.data[,c(1:7,9)],center=FALSE)
 water.data.scale<-data.frame('Location'=water.data$Location,'Season'=water.data$Season,water.data.scale)
 #Create Training and Test Set
 set.seed(571)
-inTrain<-createDataPartition(y=water.data.scale[,TARGET],p=0.8,list=FALSE)
+inTrain<-createDataPartition(y=water.data.scale$BOD5,p=0.8,list=FALSE)
 train<-water.data.scale[inTrain,]
 test<-water.data.scale[-inTrain,]
 # perform cross-validtion on training data set
 controlParameter=trainControl(method = "cv",number = 10,savePredictions = TRUE)
-
+# perform linear regreesion on training data
+lm_model<-train(BOD5~.,data=train,method='lm',trControl=controlParameter)
+# constrcut empty data frame for prediction
+newdf=data.frame(matrix(ncol = 9,nrow = 0))
+colnames(newdf)=names(water.data[,-1])
 
 
 # Define UI for application that draws a histogram
@@ -70,13 +75,25 @@ ui <- fluidPage(
                      value = 0.1,
                      min = 0,
                      max = 10),
-         numericInput("Location","Location",value =1,  min = 1,max = 7,step = 1),
-         sliderInput("pop.density",
-                     "population density",
+         sliderInput("Location",
+                     "Location",
+                     value = 1,
+                     min = 1,
+                     max = 7,
+                     step = 1),
+         sliderInput("Pop.density",
+                     "Pop.density",
                      value = 5048,
                      min = 2000,
                      max = 10000),
-         numericInput("season","season",value = 1 ,min = 1,max = 4,step = 1),
+         sliderInput("Season",
+                     "Season",
+                     value = 1,
+                     min = 1,
+                     max = 4,
+                     step = 1),
+         # numericInput("Location","Location",value =1,  min = 1,max = 7,step = 1),
+         # numericInput("Season","Season",value = 1 ,min = 1,max = 4,step = 1),
          # Choose Model to fit from Dropdown Menu
          selectInput("model",                       # Name of input
                      "Model Type",                  # Display Label
@@ -86,9 +103,15 @@ ui <- fluidPage(
       
       # Show a plot of the generated distribution
       mainPanel(
-        textOutput('predict BOD5'),
-        tabPanel("Summary", verbatimTextOutput("summary")),
-        tabPanel("Linear Regression Summary", verbatimTextOutput("Linearsummary"))
+        tabsetPanel(
+          type = "tabs",
+          tabPanel("Training Data Summary", verbatimTextOutput("datasummary")),
+          tabPanel("Linear Regression Model Summary", 
+                   verbatimTextOutput("model")),
+          tabPanel("Predict BOD5",textOutput('pred'))
+          
+        )
+        
       )
       
     )
@@ -98,13 +121,34 @@ ui <- fluidPage(
 
 # Define server 
 server <- function(input, output) {
+  # Generate summary statistics of the training dataset
+  output$datasummary <- renderPrint({summary(train)})
   
+  # regression model
+  output$model <- renderPrint({summary(lm_model)})
   
-  lm1 <- reactive({train(BOD5 ~.,data=train,method='lm',trControl=controlParameter)}) 
-  output$RegSum <- renderPrint({summary(lm1())})
+  # predict output
+  # take input data
+  # dataIn <- reactive(
+  #   {
+  #     predict(lm_model,
+  #             rbind(newdf,c(
+  #               input$TKN,
+  #               input$NH3.N,
+  #               input$P.TOT,
+  #               input$SS,
+  #               input$FLOW,
+  #               input$Rainfall,
+  #               input$Location,
+  #               input$Pop.density,
+  #               input$Season ))
+  #             )
+  #   }
+  # )
+  # output$pred <- renderPrint({dataIn()})
   
+  output$pred <- renderPrint({'prediction result'})
 
-   
    
 }
 
