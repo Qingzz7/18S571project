@@ -1,6 +1,6 @@
 # MATH571 final project
 # ANOVA test
-# Use ANOVA-test p-value approach to compare data for TKN (target variable) 
+# Use ANOVA-test p-value approach to compare data for BOD5 (target variable) 
 # from the 8 waste water treatment plants to see if the means are equal.
 # If the means are not equal, 
 # we will use dummy variables to differentiate between the waste water treatment plants.  
@@ -92,13 +92,9 @@ criticalValue = qf(p = 1 - alpha
 print(criticalValue)
 }
 
-# H0: The mean of TKN of different location are equal.
-# H1: The mean of TKN of different location are not all equal.
+# H0: The mean of BOD5 of different location are equal.
+# H1: The mean of BOD5 of different location are not all equal.
 # 1052 is the F value calculated by anova.
 ifelse(938 >= criticalValue, "Reject H0", 
                              "Fail to reject H0")
 
-if (!require(devtools))
-  install.packages("devtools")
-devtools::install_github("rstudio/leaflet")
-shiny::runGitHub("rstudio/shiny-examples", subdir="063-superzip-example")
