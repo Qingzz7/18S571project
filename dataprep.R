@@ -1553,7 +1553,7 @@ all.mwrd.clean<-all.mwrd[!clean,]
 dim(all.mwrd.clean)
 
 
-
+#add population density
 
 cookCounty.pop<-5194675
 
@@ -1602,11 +1602,28 @@ Population.density[all.mwrd.clean$Location==7]<-southwest.density
 Population.density[all.mwrd.clean$Location==8]<-westside.density
 
 all.mwrd.clean<-data.frame(all.mwrd.clean,"Pop.density"=Population.density)
+head(all.mwrd.clean)
+
+water.data<-separate(all.mwrd.clean,DATE,c('Year','Month','Day'),sep='-',remove=TRUE)
+water.data<-water.data[,c(-1,-3)]
+head(water.data)
+water.data$Month<-as.numeric(water.data$Month)
+
+Season<-rep(0,nrow(water.data))
+Season[water.data$Month>=1&water.data$Month<=3]<-1 #Winter
+Season[water.data$Month>=4&water.data$Month<=6]<-2 #Spring
+Season[water.data$Month>=7&water.data$Month<=9]<-3 #Summer
+Season[water.data$Month>=10&water.data$Month<=12]<-4 #Fall
+
+water.data<-data.frame(water.data,'Season'=as.factor(Season))
+head(water.data)
 
 setwd('C:/Users/boltz/Documents/GitHub/18S571project/completedata')
-write.csv(all.mwrd.clean,'completeMwrd_BOD5.csv',row.names=TRUE)
-summary(all.mwrd.clean)
-summary(all.mwrd)
+head(water.data)
+water.data<-water.data[,-1]
+water.data<-data.frame('DATE'=all.mwrd.clean$DATE,water.data)
+#write.csv(water.data,'completeMwrd_BOD5.csv',row.names=TRUE)
+
 
 
 #Location 1=calumet, 2=egan,3= hanover park,4=kirie,5=lemont,6=obrien,7=southwest,8=west side

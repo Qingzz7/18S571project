@@ -38,35 +38,24 @@ modelForm<-createModelFormula(TARGET,XVARS)
 setwd('C:/Users/boltz/Documents/GitHub/18S571project/completedata')
 water.data.raw<-read.csv('completeMwrd_BOD5.csv',header = TRUE,sep = ',',stringsAsFactors=FALSE)
 rownames(water.data.raw)<-water.data.raw$X
-water.data.raw<-water.data.raw[,-1]
+
 head(water.data.raw)
-#Separate Date in 3 columns Year, Month, Day
-water.data<-separate(water.data.raw,DATE,c('Year','Month','Day'),sep='-',remove=TRUE)
+
+
+#Get rid of rownames column
+water.data<-water.data.raw[,c(-1,-2)]
+#write file
 head(water.data)
-water.data<-water.data[,-c(1,3)]
-
-#Convert to Numeric for creating season variable
-water.data$Month<-as.numeric(water.data$Month)
-#Convert Location to Factor
-water.data$Location<-as.factor(water.data$Location)
-
-#Create Season Variable
-Season<-rep(0,nrow(water.data))
-Season[water.data$Month>=1&water.data$Month<=3]<-1 #Winter
-Season[water.data$Month>=4&water.data$Month<=6]<-2 #Spring
-Season[water.data$Month>=7&water.data$Month<=9]<-3 #Summer
-Season[water.data$Month>=10&water.data$Month<=12]<-4 #Fall
-
-#Create Data frame, Make season and turn month back to factor for use in models
-water.data<-data.frame(water.data,'Season'=as.factor(Season))
+#write.csv(water.data,'completeMwrd_BOD5.csv',row.names=TRUE)
 #water.data$Pop.density<-sapply(water.data$Pop.density,as.factor)
-#Get rid of numeric month data
-water.data<-water.data[,-1]
-head(water.data)
+
+
 #Check all the columns are the correct data type
 
-sapply(water.data,class)  
-
+water.data$Location<-sapply(water.data$Location,as.factor)  
+water.data$Season<-sapply(water.data$Season,as.factor)
+water.data$BOD5<-sapply(water.data$BOD5,as.numeric)
+sapply(water.data,class)
 #Cor Matrix
 
 pairs.panels(water.data[,c(1:7,9)],lm=TRUE)
@@ -77,6 +66,7 @@ pairs.panels(water.data[,c(1:7,9)],lm=TRUE)
 water.data.scale<-scale(water.data[,c(1:7,9)],center=FALSE)
 water.data.scale<-data.frame('Location'=water.data$Location,'Season'=water.data$Season,water.data.scale)
 head(water.data.scale)
+sapply(water.data.scale,class)
 #Forshiny
 Location.name<-rep("None",nrow(water.data.scale))
 Location.name[water.data.scale$Location==1]<-"Calumet"

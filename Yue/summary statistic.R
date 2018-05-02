@@ -1,11 +1,12 @@
-wastewater <- read.csv("C:/Users/ZH1/Desktop/MATH571/project/completeMwrd_03_22_2018.csv", header = TRUE)
+
+wastewater <- read.csv("completeMwrd_BOD5.csv", header = TRUE)
 #library(mlbench)
 
 #review  first 5 rows of data
 head(wastewater, n=5)
 dim(wastewater)
 #drop first two cloumns
-wastewater <- subset(wastewater, select = -c(X,all.mwrd.clean.DATE) )
+wastewater <- wastewater[,c(-1,-2)]
 head(wastewater, n=5)
 #the rows and columns
 dim(wastewater)
