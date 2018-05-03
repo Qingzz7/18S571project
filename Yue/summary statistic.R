@@ -1,4 +1,4 @@
-
+#set working directory to the completedata folder 
 wastewater <- read.csv("completeMwrd_BOD5.csv", header = TRUE)
 #library(mlbench)
 
@@ -16,32 +16,35 @@ library(pastecs)
 library(boot)
 options(scipen=100)
 options(digits=2)
-s <- stat.desc(wastewater)
+s <- stat.desc(wastewater[,-c(8,10)],basic=FALSE)
+s
+dim(wastewater)
+head(wastewater)
+wastewater$Location[wastewater$Location == "1"] <- "Calumet"
+wastewater$Location[wastewater$Location == "2"] <- "Egan"
+wastewater$Location[wastewater$Location == "3"] <- "Hanover"
+wastewater$Location[wastewater$Location == "4"] <- "Kirie"
+wastewater$Location[wastewater$Location == "5"] <- "Lemont"
+wastewater$Location[wastewater$Location == "6"] <- "Obrien"
+wastewater$Location[wastewater$Location == "7"] <- "Southwest"
+wastewater$Location[wastewater$Location == "8"] <- "Westside"
 
-wastewater$Location[wastewater$Location == "1"] <- "calumet"
-wastewater$Location[wastewater$Location == "2"] <- "egan"
-wastewater$Location[wastewater$Location == "3"] <- "hanoverPark"
-wastewater$Location[wastewater$Location == "4"] <- "kirie"
-wastewater$Location[wastewater$Location == "5"] <- "lemont"
-wastewater$Location[wastewater$Location == "6"] <- "obrien"
-wastewater$Location[wastewater$Location == "7"] <- "southwest"
-wastewater$Location[wastewater$Location == "8"] <- "westside"
-
+head(wastewater)
 library(ggplot2)
 #histgram
 ggplot(wastewater, aes(x=BOD5))+
   geom_histogram(color="blue", fill="yellow")+
-  facet_grid(Location ~ .)
+  facet_grid(Location ~ .)+xlim(0,1750)+ylim(0,1300)
 #qqplots
 qplot(sample = BOD5, data = wastewater, color=Location)+
-  labs(title="BOD5 according to the Location", y="mg/L concentration")
-
-
-mean <- aggregate(. ~ Location, wastewater, mean)
+  labs(title="BOD5 according to the Location", y="mg/L concentration",x="Theoretical Quantile")
+head(wastewater)
+?aggregate
+mean <- aggregate(. ~ Location, wastewater[,-10],FUN= 'mean')
 mean
-sd <- aggregate(. ~ Location, wastewater, sd)
+sd <- aggregate(. ~ Location, wastewater[,-c(10)], FUN='sd')
 sd
-IQR <- aggregate(. ~ Location, wastewater, IQR)
+IQR <- aggregate(. ~ Location, wastewater[,-10], FUN='IQR')
 IQR
 
 #correlations <- cor(wastewater[1:7])
@@ -50,16 +53,16 @@ IQR
 #install.packages("corrgram")
 #library(corrgram)
 #corrgram(wastewater, order = TRUE, lower.panel = panel.shade,
-#         upper.panel = panel.pie, text.panel = panel.txt,
-#         main = "Correlogram of wastewater intercorrelations")
+ #        upper.panel = panel.pie, text.panel = panel.txt,
+  #       main = "Correlogram of wastewater intercorrelations")
 
 # another method
 library(ggplot2)
-#install.packages("ggcorrplot")
+install.packages("ggcorrplot")
 library(ggcorrplot)
-
+head(wastewater)
 # Correlation matrix
-corr <- round(cor(wastewater[1:7]), 1)
+corr <- round(cor(wastewater[,-c(8,10)]), 1)
 corr
 # Plot
 ggcorrplot(corr, hc.order = TRUE, 

@@ -28,12 +28,12 @@ get_Out<-function(row){
  outlier<- water.data.raw[c(row-1,row,row+1),]
   
 }
-summary(water.data)
+
 #Global Variables
 TARGET<-'BOD5'
-XVARS<- c("TKN", 'NH3.N','P.TOT', 'SS', 'FLOW', 'Rainfall', 'Location','Season','Pop.density')
+XVARS<- c("TKN", 'NH3.N','P.TOT', 'SS', 'FLOW', 'Rainfall', 'Season','Pop.density','Location')
 modelForm<-createModelFormula(TARGET,XVARS)
-
+modelForm
 #Read In Data
 setwd('C:/Users/boltz/Documents/GitHub/18S571project/completedata')
 water.data.raw<-read.csv('completeMwrd_BOD5.csv',header = TRUE,sep = ',',stringsAsFactors=FALSE)
@@ -58,7 +58,7 @@ water.data$BOD5<-sapply(water.data$BOD5,as.numeric)
 sapply(water.data,class)
 #Cor Matrix
 
-pairs.panels(water.data[,c(1:7,9)],lm=TRUE)
+#pairs.panels(water.data[,c(1:7,9)],lm=TRUE)
 
 
 #Scale Data
@@ -88,6 +88,7 @@ set.seed(571)
 inTrain<-createDataPartition(y=water.data.scale[,TARGET],p=0.8,list=FALSE)
 train<-water.data.scale[inTrain,]
 test<-water.data.scale[-inTrain,]
+
 y.test<-test[,TARGET]
 x.test<-test[,XVARS]
 # perform cross-validtion on training data set
@@ -96,7 +97,9 @@ controlParameter=trainControl(method = "cv",number = 10,savePredictions = TRUE)
 
 # Models
 set.seed(571)
+
 lm_model<-train(modelForm,data=train,method='lm',trControl=controlParameter)
+summary(lm_model)
 
 set.seed(571)
 forward_model=train(modelForm,data=train,method='leapForward',trControl=controlParameter)
@@ -189,13 +192,18 @@ train<-water.data.scale.sqrt[inTrain,]
 test<-water.data.scale.sqrt[-inTrain,]
 y.test<-test[,TARGET]
 x.test<-test[,XVARS]
-
+head(train)
 # perform cross-validtion on training data set
 controlParameter=trainControl(method = "cv",number = 10,savePredictions = TRUE)
-# Models
-lm0<-lm(modelForm,data=train)
-par(mfrow=c(2,2))
-plot(lm0)
+#When we include the intercept it give ceofficient for pop.density=NA
+#using the modelform include intercept=FALSE does not change the pop.density=NA
+#The only solution that works was to manually type out the equation including -1 
+#This resulted in pop.denisty !=NA.
+modelForm
+
+
+
+
 Out.16771<-get_Out(16771)
 Out.11452<-get_Out(11452)
 Out.15471<-get_Out(15471)
@@ -205,6 +213,7 @@ Out.15471
 
 set.seed(571)
 lm_model.sqrt<-train(modelForm,data=train,method='lm',trControl=controlParameter)
+summary(lm_model.sqrt)
 set.seed(571)
 forward_model.sqrt<-train(modelForm,data=train,method='leapForward',trControl=controlParameter)
 set.seed(571)
@@ -225,7 +234,7 @@ pcr_model.sqrt<-train(modelForm,data=train, method='pcr',trControl=controlParame
 set.seed(571)
 #xgblinear.sqrt<-train(modelForm,data=train,method='xgbLinear',trControl=controlParameter,tunelength=10)
 #saveRDS(xgblinear.sqrt,file="xgblinear_sqrt.rds")
-xgbLinear_model.sqrt<-readRDS("xgblinear_sqrt.rds")
+xgblinear_model.sqrt<-readRDS("xgblinear_sqrt.rds")
 
 set.seed(571)
 #random200_model.sqrt<-train(modelForm,data=train,method='rf',trControl=controlParameter,ntree=200)
@@ -283,5 +292,4 @@ Performance.sqrt
 Performance.sorted.sqrt<-Performance.sqrt[order(Performance.sqrt$MSE.sqrt,-Performance.sqrt$AdjR2.sqrt),]
 Performance.sorted.sqrt
 Performance.sorted
-
 

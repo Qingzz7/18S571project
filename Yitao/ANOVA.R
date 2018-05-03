@@ -7,8 +7,9 @@
 
 
 # Read data
-# Please change the library manually to read the file.
-water_df <- read.csv("~/Desktop/completeMwrd.csv",  header=TRUE, sep=",")
+# Please set working directory to completedata in 18S571
+
+water_df <- read.csv("completeMwrd_BOD5.csv",  header=TRUE, sep=",")
 head(water_df)
 
 water_df[,'Location'] <- as.factor(water_df[,'Location'])
